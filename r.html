@@ -1,3 +1,4 @@
+
 <html>
 
 <head>
@@ -6,12 +7,11 @@
 
 <body>
 
-<p>The Token will be generated below</p><br>
-<p>Status: <span id="status"></span></p><br>
-<p id="token"></p>
+<p>The Token will be generated in about 5 seconds of pageload, check your console for response</p><br>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        var foreignUrl= 'your_url_with_http_or_https'; //the url where you want to scrape the csrf token
+        var foreignUrl= 'https://event-reservation-system.herokuapp.com/'; //the url where you want to scrape the csrf token
 
         var encodedUrl = btoa(unescape(encodeURIComponent(foreignUrl))) //you must base64encode the url you want to fetch its csrf token
 
@@ -31,10 +31,11 @@
         var scraperUrl = 'http://csrf.abiolayakubu.com.ng/csrf_scraper.php';
         var client = new HttpClient();
         client.get(scraperUrl+'?url=' + encodedUrl, function(response) {
-            alert('completed')
+            alert('completed')//you can remove this 
             let obj = JSON.parse(response)
-            document.getElementById('token').innerHTML = obj.token
-            document.getElementById('status').innerHTML = obj.message
+            console.log(obj.token)
+            console.log(obj.message)
+            
         });
     </script>
 </body>
