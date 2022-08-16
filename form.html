@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="spiner.css" />
+
+</head>
+
+<body>
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+  </div>
+
+  <form id="inputform">
+    <input type="url" id="url" name="url" placeholder="Input url" >
+    <input type="submit"  value="fetch csrf " />
+  </form>
+
+<p>The Token will be generated below</p><br>
+<p>Status: <span id="status-js"></span></p><br>
+<p id="token"></p>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        window.onload = function() {
+        
+        $('#status').fadeOut(); 
+        $('#preloader').delay(350).fadeOut('slow'); 
+        $('body').delay(550).css({'overflow':'visible'});
+
+        var HttpClient = function() {
+            this.get = function(aUrl, aCallback) {
+                var anHttpRequest = new XMLHttpRequest();
+                anHttpRequest.onreadystatechange = function() {
+                    if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+                        aCallback(anHttpRequest.responseText);
+                }
+
+                anHttpRequest.open("GET", aUrl, true);
+                anHttpRequest.send(null);
+            }
+        }
+
+        document.getElementById('inputform').onsubmit = function() {
+        // let data = new FormData(document.getElementById("inputform"));
+
+                var encodedUrl = btoa(unescape(encodeURIComponent(document.getElementById("url"))))
+                var client = new HttpClient();
+
+                $('#status').fadeIn(); // will first fade out the loading animation 
+                $('#preloader').delay(350).fadeIn('slow'); // will fade out the white DIV that covers the website.
+
+                client.get('./csrf_scraper.php?url=' + encodedUrl, function(response) {
+                    alert('completed')
+                    let obj = JSON.parse(response)
+                    console.log(response)
+                    document.getElementById('token').innerHTML = obj.token
+                    document.getElementById('status-js').innerHTML = obj.message
+
+                $('#status').fadeOut(); // will first fade out the loading animation 
+                $('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+                $('body').delay(550).css({'overflow':'visible'});
+
+                });
+
+            return false;
+            }
+        }
+
+
+    </script>
+    <script type="text/javascript" src="spiner.js" ></script>
+</body>
+
+</html>
