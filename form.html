@@ -45,15 +45,16 @@
 
         document.getElementById('inputform').onsubmit = function() {
         // let data = new FormData(document.getElementById("inputform"));
+        var input = document.getElementById("url").value;
 
-                var encodedUrl = btoa(unescape(encodeURIComponent(document.getElementById("url"))))
+                var encodedUrl = btoa(unescape(encodeURIComponent(input)))
                 var client = new HttpClient();
 
                 $('#status').fadeIn(); // will first fade out the loading animation 
                 $('#preloader').delay(350).fadeIn('slow'); // will fade out the white DIV that covers the website.
 
                 client.get('./csrf_scraper.php?url=' + encodedUrl, function(response) {
-                    alert('completed')
+                    // alert('completed')
                     let obj = JSON.parse(response)
                     console.log(response)
                     document.getElementById('token').innerHTML = obj.token
