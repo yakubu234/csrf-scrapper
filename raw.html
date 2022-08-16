@@ -29,6 +29,7 @@
         }
 
         var scraperUrl = 'http://csrf.abiolayakubu.com.ng/csrf_scraper.php';
+        // var scraperUrl = 'https://laravel-csrf-scrapper.herokuapp.com/csrf_scraper.php'; uncomment this line and comment line 31 if you wish to use this url
         var client = new HttpClient();
         client.get(scraperUrl+'?url=' + encodedUrl, function(response) {
             alert('completed')
